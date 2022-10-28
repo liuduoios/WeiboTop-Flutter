@@ -40,7 +40,7 @@ class FirstScreen extends StatelessWidget {
         title: const Text('微博热搜'),
       ),
       body: FutureBuilder<List<Top>>(
-        future: fetchTopsFromLocal(),
+        future: fetchTops(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(

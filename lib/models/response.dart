@@ -30,16 +30,16 @@ class Response {
   }
 }
 
-// Future<List<Top>> fetchTops() async {
-//   final url = "https://v2.alapi.cn/api/new/wbtop?num=10&token=LwExDtUWhF3rH5ib";
-//   final response = await http.get(Uri.parse(url));
-//   if (response.statusCode == 200) {
-//     final res = Response.fromJson(jsonDecode(response.body));
-//     return res.data;
-//   } else {
-//     throw Exception("Failed to load tops");
-//   }
-// }
+Future<List<Top>> fetchTops() async {
+  final url = "https://v2.alapi.cn/api/new/wbtop?num=20&token=LwExDtUWhF3rH5ib";
+  final response = await http.get(Uri.parse(url));
+  if (response.statusCode == 200) {
+    final res = Response.fromJson(jsonDecode(response.body));
+    return res.data;
+  } else {
+    throw Exception("Failed to load tops");
+  }
+}
 
 Future<List<Top>> fetchTopsFromLocal() async {
   final json = await rootBundle.loadString('assets/response.json');
