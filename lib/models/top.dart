@@ -11,8 +11,9 @@ class Top {
 
   factory Top.fromJson(Map<String, dynamic> json) {
     return Top(
-        hotWord: json['hot_word'],
-        hotWordNum: json['hot_word_num'],
-        url: json['url']);
+      hotWord: json['hot_word'] as String,
+      hotWordNum: json['hot_word_num'] as int,
+      url: json['url'] as String,
+    );
   }
 }
