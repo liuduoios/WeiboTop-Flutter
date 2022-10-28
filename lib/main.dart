@@ -70,11 +70,9 @@ class TopList extends StatelessWidget {
       itemCount: tops.length,
       itemBuilder: (context, index) {
         return GestureDetector(
-          child: Card(
-            child: ListTile(
-              title: Text(tops[index].hotWord),
-              subtitle: Text('${tops[index].hotWordNum}'),
-            ),
+          child: RowCard(
+            index: index,
+            top: tops[index],
           ),
           onTap: () {
             Navigator.pushNamed(
@@ -87,5 +85,83 @@ class TopList extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+class RowCard extends StatelessWidget {
+  const RowCard({super.key, required this.index, required this.top});
+
+  final int index;
+  final Top top;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Row(
+        children: [
+          Container(
+            width: 40,
+            child: Center(
+              child: Text(
+                '${index + 1}',
+                style: TextStyle(
+                  color: colorOfIndex(index + 1),
+                  fontWeight: FontWeight.bold,
+                  fontSize: fontSizeOfIndex(index + 1),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(top: 8, bottom: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    top.hotWord,
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${top.hotWordNum}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black26,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Color colorOfIndex(int index) {
+    if (index == 1) {
+      return Colors.red;
+    } else if (index == 2) {
+      return Colors.red[400]!;
+    } else if (index == 3) {
+      return Colors.yellow[800]!;
+    } else {
+      return Colors.yellow[600]!;
+    }
+  }
+
+  double fontSizeOfIndex(int index) {
+    if (index == 1) {
+      return 20;
+    } else if (index == 2) {
+      return 18;
+    } else if (index == 3) {
+      return 16;
+    } else {
+      return 14;
+    }
   }
 }
