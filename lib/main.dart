@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:weibo_top/detail.dart';
 import 'package:weibo_top/models/photo.dart';
 import 'package:weibo_top/models/response.dart';
 import 'package:weibo_top/models/top.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const title = 'Mixed List';
+    const title = '微博热搜';
 
     return MaterialApp(
       title: title,
@@ -52,16 +53,20 @@ class TopList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
+    return ListView.builder(
       itemCount: tops.length,
       itemBuilder: (context, index) {
-        return Column(
-          children: [
-            Text(tops[index].hotWord),
-            Text('${tops[index].hotWordNum}'),
-          ],
+        return GestureDetector(
+          child: Card(
+            child: ListTile(
+              title: Text(tops[index].hotWord),
+              subtitle: Text('${tops[index].hotWordNum}'),
+            ),
+          ),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Detail()));
+          },
         );
       },
     );
