@@ -21,26 +21,39 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: title,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text(title),
-        ),
-        body: FutureBuilder<List<Top>>(
-          future: fetchTopsFromLocal(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return const Center(
-                child: Text('An error has occurred!'),
-              );
-            } else if (snapshot.hasData) {
-              return TopList(tops: snapshot.data!);
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          },
-        ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const FirstScreen(),
+        Detail.routeName: (context) => const Detail(),
+      },
+    );
+  }
+}
+
+class FirstScreen extends StatelessWidget {
+  const FirstScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('微博热搜'),
+      ),
+      body: FutureBuilder<List<Top>>(
+        future: fetchTopsFromLocal(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('An error has occurred!'),
+            );
+          } else if (snapshot.hasData) {
+            return TopList(tops: snapshot.data!);
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
@@ -64,8 +77,12 @@ class TopList extends StatelessWidget {
             ),
           ),
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Detail()));
+            Navigator.pushNamed(
+              context,
+              Detail.routeName,
+              arguments:
+                  DetailScreenArguments(tops[index].hotWord, tops[index].url),
+            );
           },
         );
       },
